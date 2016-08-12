@@ -77,7 +77,14 @@
     [self makeRequestWithMethod:@"food.find_id_for_barcode"
                      parameters:params
                      completion:^(NSDictionary *data) {
-                         completionBlock([FSFood foodWithJSON:[data objectForKey:@"food"]]);
+                         NSInteger foodid = [data objectForKey:@"food_id"];
+                         //completionBlock([FSFood foodWithJSON:[data objectForKey:@"food"]]);
+                          NSDictionary *params2 = @{@"food_id" : @(foodid)};
+                         [self makeRequestWithMethod:@"food.get"
+                                          parameters:params2
+                                          completion:^(NSDictionary *data) {
+                                              completionBlock([FSFood foodWithJSON:[data objectForKey:@"food"]]);
+                                          }];
                      }];
 }
 
