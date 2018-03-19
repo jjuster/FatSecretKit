@@ -78,6 +78,15 @@
            completion:completionBlock];
 }
 
+- (void)searchFoods:(NSString *)foodText language:(NSString *)language region:(NSString *)region completion:(FSFoodSearchBlock)completionBlock {
+    [self searchFoods:foodText
+   	pageNumber:0
+	maxResults:20
+   	language:language
+   	region:region
+   	completion:completionBlock];
+}
+
 - (void)getFood:(NSInteger)foodId language:(NSString *)language region:(NSString *)region completion:(void (^)(FSFood *food))completionBlock {
     NSDictionary *params = @{@"food_id" : @(foodId), @"language": language, @"region": region};
 
