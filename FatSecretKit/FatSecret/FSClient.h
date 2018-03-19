@@ -21,11 +21,20 @@ typedef void(^FSFoodSearchBlock)(NSArray *foods, NSInteger maxResults, NSInteger
 - (void)searchFoods:(NSString *)foodText
          pageNumber:(NSInteger)pageNumber
          maxResults:(NSInteger)maxResults
+         language:(NSString *)language
+         region:(NSString *)region
          completion:(FSFoodSearchBlock)completionBlock;
+
+- (void)searchFoods:(NSString *)foodText
+         pageNumber:(NSInteger)pageNumber
+         maxResults:(NSInteger)maxResults
+         completion:(FSFoodSearchBlock)completionBlock;
+
+- (void)searchFoods:(NSString *)foodText language:(NSString *)language region:(NSString *)region completion:(FSFoodSearchBlock)completionBlock;
 
 - (void)searchFoods:(NSString *)foodText completion:(FSFoodSearchBlock)completionBlock;
 
-- (void)getFood:(NSInteger)foodId completion:(void (^)(FSFood *food))completionBlock;
+- (void)getFood:(NSInteger)foodId language:(NSString *)language region:(NSString *)region completion:(void (^)(FSFood *food))completionBlock;
 
 + (FSClient *)sharedClient;
 
