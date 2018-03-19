@@ -19,12 +19,16 @@
 - (void)searchFoods:(NSString *)foodText
          pageNumber:(NSInteger)pageNumber
          maxResults:(NSInteger)maxResults
+	 language:(NSString *)language
+         region:(NSString *)region
          completion:(FSFoodSearchBlock)completionBlock {
 
     NSMutableDictionary *params = [@{
         @"search_expression" : foodText,
         @"page_number"       : @(pageNumber),
-        @"max_results"       : @(maxResults)
+        @"max_results"       : @(maxResults),
+	@"language"	     : language,
+	@"region"	     : region
     } mutableCopy];
 
     [self makeRequestWithMethod:@"foods.search" parameters:params completion:^(NSDictionary *response) {
@@ -54,11 +58,34 @@
     }];
 }
 
+- (void)searchFoods:(NSString *)foodText
+         pageNumber:(NSInteger)pageNumber
+         maxResults:(NSInteger)maxResults
+         completion:(FSFoodSearchBlock)completionBlock {
+
+     [self searchFoods:foodText
+           pageNumber:0
+           maxResults:20
+           language:@"en"
+           region:@"US"
+           completion:completionBlock];
+}
+
 - (void)searchFoods:(NSString *)foodText completion:(FSFoodSearchBlock)completionBlock {
     [self searchFoods:foodText
            pageNumber:0
            maxResults:20
            completion:completionBlock];
+}
+
+- (void)getFood:(NSInteger)foodId language:(NSString *)language region:(NSString *)region completion:(void (^)(FSFood *food))completionBlock {
+    NSDictionary *params = @{@"food_id" : @(foodId), @"language": language, @"region": region};
+
+    [self makeRequestWithMethod:@"food.get"
+                     parameters:params
+                     completion:^(NSDictionary *data) {
+                         completionBlock([FSFood foodWithJSON:[data objectForKey:@"food"]]);
+                     }];
 }
 
 - (void)getFood:(NSInteger)foodId completion:(void (^)(FSFood *food))completionBlock {
