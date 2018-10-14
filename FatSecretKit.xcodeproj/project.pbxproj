@@ -261,7 +261,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = FS;
-				LastTestingUpgradeCheck = 0720;
+				LastTestingUpgradeCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Mysterious Trousers";
 			};

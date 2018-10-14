@@ -107,6 +107,23 @@
                      }];
 }
 
+- (void)getFoodByUPC:(NSString*)upc completion:(void (^)(FSFood *food))completionBlock{
+    NSDictionary *params = @{@"barcode" : upc};
+    
+    [self makeRequestWithMethod:@"food.find_id_for_barcode"
+                     parameters:params
+                     completion:^(NSDictionary *data) {
+                         NSInteger foodid = [[[data objectForKey:@"food_id"] objectForKey:@"value"] integerValue];
+                         //completionBlock([FSFood foodWithJSON:[data objectForKey:@"food"]]);
+                          NSDictionary *params2 = @{@"food_id" : @(foodid)};
+                         [self makeRequestWithMethod:@"food.get"
+                                          parameters:params2
+                                          completion:^(NSDictionary *data) {
+                                              completionBlock([FSFood foodWithJSON:[data objectForKey:@"food"]]);
+                                          }];
+                     }];
+}
+
 - (void) makeRequestWithMethod:(NSString *)method
                     parameters:(NSDictionary *)params
                     completion:(void (^)(NSDictionary *data))completionBlock {

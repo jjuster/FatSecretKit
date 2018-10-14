@@ -38,6 +38,8 @@ typedef void(^FSFoodSearchBlock)(NSArray *foods, NSInteger maxResults, NSInteger
 
 - (void)getFood:(NSInteger)foodId language:(NSString *)language region:(NSString *)region completion:(void (^)(FSFood *food))completionBlock;
 
+- (void)getFoodByUPC:(NSString*)upc completion:(void (^)(FSFood *food))completionBlock;
+
 + (FSClient *)sharedClient;
 
 @end
